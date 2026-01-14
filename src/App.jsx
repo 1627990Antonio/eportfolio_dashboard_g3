@@ -1,13 +1,15 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
+
+//Componentes
 import Cabecera from './componentes/Cabecera/Cabecera'
 import Roles from './componentes/Roles/Roles'
 import Dashboard from './componentes/Dashboard/Dashboard'
 
+//Contextos
+import TokenContext from './contextos/TokenContext'
+
 function App() {
-  const [count, setCount] = useState(0)
 
   let usuario = "Admin"
   let token = "abc123xyz456"
@@ -25,7 +27,9 @@ function App() {
             <Roles menu={menu}></Roles>
           </div>
           <div className="col-10 fondoDashboard">
-            <Dashboard token={token}></Dashboard>  
+            <TokenContext.Provider value={token}>
+              <Dashboard></Dashboard>  
+            </TokenContext.Provider>
           </div>
         </div>
       </div>

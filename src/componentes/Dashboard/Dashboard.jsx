@@ -1,6 +1,10 @@
+import React, {useContext} from "react";
+import TokenContext from "../../contextos/TokenContext";
+
 function Dashboard(props){
+    const token = useContext(TokenContext)
     return(
-        <main>Main <br/>{props.token}</main>
+        <main>Main <br/>{token}</main>
     )
 }
 export default Dashboard
