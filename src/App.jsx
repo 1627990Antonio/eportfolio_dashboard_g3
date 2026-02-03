@@ -8,30 +8,41 @@ import Dashboard from './componentes/Dashboard/Dashboard'
 
 //Contextos
 import TokenContext from './contextos/TokenContext'
+import UserContext from './contextos/UserContext'
 
 function App() {
 
+  //variables
   let usuario = "Admin"
   let token = "abc123xyz456"
   let menu = "Inicio, Dashboard, Configuración"
+
+
+  //Estados
+  const [user, setUser] = useState(usuario)
+
   return (
     <>
+
       <div className="container-fluid">
         <div className="row">
           <div className="col-12 fondoCabecera">
-            <Cabecera usuario={usuario}></Cabecera>
+            <Cabecera user={user}></Cabecera>
           </div>
         </div>
-        <div className="row">
-          <div className="col-2 fondoRoles">
-            <Roles menu={menu}></Roles>
+        <UserContext.Provider value={user}>
+          <div className="row">
+            <div className="col-2 fondoRoles">
+              <Roles menu={menu}></Roles>
+            </div>
+            <div className="col-10 fondoDashboard">
+              <TokenContext.Provider value={token}>
+                <Dashboard></Dashboard>
+              </TokenContext.Provider>
+
+            </div>
           </div>
-          <div className="col-10 fondoDashboard">
-            <TokenContext.Provider value={token}>
-              <Dashboard></Dashboard>  
-            </TokenContext.Provider>
-          </div>
-        </div>
+        </UserContext.Provider>
       </div>
     </>
   )

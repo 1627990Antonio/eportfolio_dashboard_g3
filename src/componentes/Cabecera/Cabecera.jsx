@@ -1,6 +1,6 @@
 function Cabecera(props) {
     return(
-        <header>prueba <br/>{props.usuario} </header>
+        <header>prueba <br/>{props.user} </header>
     )
 }
 export default Cabecera
