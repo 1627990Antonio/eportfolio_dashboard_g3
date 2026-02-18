@@ -7,11 +7,18 @@ import Select from '@mui/material/Select';
 import tareasRA from '../../mocks/mock-tareasRA';
 
 
-function SelectorTareaRA() {
+function SelectorTareaRA(props) {
   const [tarea, setTarea] = useState("");
 
   const handleChange = (event) => {
-    setTarea(event.target.value);
+    const tareaSeleccionada = event.target.value;
+
+    setTarea(tareaSeleccionada);
+
+    //Verificamos que la función existe para evitar errores y enviamos la tarea al padre
+    if(props.seleccionarTarea){
+      props.seleccionarTarea(tareaSeleccionada)
+    }
   };
 
   function mostrarTareas(tarea){
@@ -27,7 +34,7 @@ function SelectorTareaRA() {
           id="demo-simple-select"
           value={tarea}
           label="tarea"
-          onChange={handleChange}        >
+          onChange={handleChange}>
             {tareasRA.lista.map(mostrarTareas)}
         </Select>
       </FormControl>
