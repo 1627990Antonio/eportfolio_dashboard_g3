@@ -1,6 +1,8 @@
 import { useContext } from "react"
 import userContext from "../../contextos/UserContext"
 import { useForm } from "react-hook-form"
+import { TextField } from "@mui/material"
+import { Button } from "@mui/material"
 function NuevaEvidenciaForm(props) {
     const usuario = useContext(userContext)
     const TAREA = {
@@ -11,39 +13,64 @@ function NuevaEvidenciaForm(props) {
         estado_validacion: "estado_validacion"
     }
     const TAREA_INICIAL = {
-        tarea_id: "tarea_id",
-        estudiante_id: "estudiante_id",
+        tarea_id: props.tareaActual.id,
+        estudiante_id: usuario.id,
         url: "",
         descripcion: "",
-        estado_validacion: ""
+        estado_validacion: "pendiente"
     }
-    const {register, 
-           handleSubmit,
-           reset,
-           formState: { errors },
-           watch} = useForm({defaultValues: TAREA_INICIAL});
-        
-    console.log(errors);
+    const { register,
+        handleSubmit,
+        reset,
+        formState: { errors },
+        watch } = useForm({ defaultValues: TAREA_INICIAL });
 
     const manejarFormulario = handleSubmit((nuevaEvidencia) => {
-        console.log(nuevaEvidencia);
+        if(props.recibirEvidencia){
+            props.recibirEvidencia(nuevaEvidencia)
+        }
         reset(TAREA_INICIAL);
     })
     return (
         <>
             <form id="NuevaEvidenciaForm" onSubmit={manejarFormulario}>
-                <label htmlFor={TAREA.url}>URL</label>
-                <input id={TAREA.url} type="text" {...register(TAREA.url, 
-                                                    {required: {value: true, 
-                                                                message: "URL requerida"}, 
-                                                     pattern: /^https?:\/\/.+\..+$/})} /><br />
-                <span>{errors.url?.message}</span>
-                <label htmlFor={TAREA.descripcion}>Observaciones</label>
-                <input id={TAREA.descripcion} type="text" {...register(TAREA.descripcion, 
-                                                    {required: {value: true, 
-                                                                message: "Descripción requerida"}})} /><br />
-                <span>{errors.descripcion?.message}</span>
-                <button>Añadir nueva evidencia</button>
+                {/* Campo de texto de URL*/}
+                <TextField
+                    id={TAREA.url}
+                    type="text"
+                    label="URL"
+                    variant="outlined"
+                    margin="normal"
+                    fullWidth
+                    {...register(TAREA.url,
+                        {
+                            required: {
+                                value: true,
+                                message: "URL requerida"
+                            },
+                            pattern: {value: /^https?:\/\/.+\..+$/, 
+                                      message: "URL inválida"}
+                        })}
+                    error={!!errors.url}
+                    helperText={errors.url?.message} /><br />
+                {/* Campo de texto de Descripción*/}
+                <TextField
+                    id={TAREA.descripcion}
+                    type="text"
+                    label="Observaciones"
+                    variant="outlined"
+                    margin="normal"
+                    fullWidth
+                    {...register(TAREA.descripcion,
+                        {
+                            required: {
+                                value: true,
+                                message: "Descripción requerida"
+                            }
+                        })}
+                    error={!!errors.descripcion}
+                    helperText={errors.descripcion?.message} /><br />
+                <Button variant="contained" type="submit">Añadir nueva evidencia</Button>
             </form>
         </>
     )

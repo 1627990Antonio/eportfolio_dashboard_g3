@@ -11,10 +11,14 @@ function NuevaEvidencia() {
         console.log("El padre recibió: ", tarea)
         setTareaActual(tarea);
     }
+
+    function recibirEvidencia(evidencia){
+        console.log("El padre recibió: ", evidencia)
+    }
     return(
         <>
             <SelectorTareaRA seleccionarTarea={seleccionarTarea}></SelectorTareaRA> 
-            <NuevaEvidenciaForm tareaActual={tareaActual}></NuevaEvidenciaForm>
+            <NuevaEvidenciaForm tareaActual={tareaActual} recibirEvidencia={recibirEvidencia}></NuevaEvidenciaForm>
         </>
     )
 }
