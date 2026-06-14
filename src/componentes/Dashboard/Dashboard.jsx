@@ -1,12 +1,12 @@
 import React, {useContext} from "react";
 import TokenContext from "../../contextos/TokenContext";
-import NuevaEvidencia from "../NuevaEvidencia/NuevaEvidencia";
 
 function Dashboard(){
     const token = useContext(TokenContext)
     return(
-        <main>Main <br/>{token}
-            <NuevaEvidencia></NuevaEvidencia>
+        <main>
+            <h2>Bienvenido al Dashboard</h2>
+            <p>Selecciona una opción del menú lateral.</p>
         </main>
     )
 }

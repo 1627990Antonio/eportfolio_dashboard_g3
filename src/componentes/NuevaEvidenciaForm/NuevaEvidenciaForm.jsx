@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form"
 import { TextField } from "@mui/material"
 import { Button } from "@mui/material"
 function NuevaEvidenciaForm(props) {
-    const usuario = useContext(userContext)
+    const user = useContext(userContext)
     const TAREA = {
         tarea_id: "tarea_id",
         estudiante_id: "estudiante_id",
@@ -14,7 +14,7 @@ function NuevaEvidenciaForm(props) {
     }
     const TAREA_INICIAL = {
         tarea_id: props.tareaActual.id,
-        estudiante_id: usuario.id,
+        estudiante_id: user,
         url: "",
         descripcion: "",
         estado_validacion: "pendiente"

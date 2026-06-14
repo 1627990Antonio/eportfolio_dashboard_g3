@@ -1,20 +1,12 @@
 import { useState, useContext } from "react"
-import userContext from "../contextos/UserContext"
-import modulos from "../mocks/mock-matriculados"
+import UserContext from "../contextos/UserContext"
+import impartidos from "../mocks/mock-impartidos"
+
 function useMisModulosImpartidos(){
-    const usuario = useContext(userContext)
+    const usuario = useContext(UserContext)
     const [buscando, setBuscando] = useState(false)
-    const [lista, setLista] = useState([])
+    const [lista, setLista] = useState(impartidos[usuario]?.lista || [])
 
-    function obtenerModulos(usuario){
-        setBuscando(true)
-
-        const modulosUsuario = modulos.lista.filter(modulo = modulo.estudiante_id === usuario.id)
-        setLista(modulosUsuario)
-        
-        setBuscando(false)
-    }
-
-    return {obtenerModulos}
+    return {buscando, lista}
 }
 export default useMisModulosImpartidos
