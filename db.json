@@ -1,0 +1,48 @@
+{
+  "roles": {
+    "Victor": { "roles": ["docente", "estudiante", "administrador"] },
+    "Antonio": { "roles": ["estudiante"] },
+    "Alberto": { "roles": ["docente", "administrador"] }
+  },
+  "impartidos": {
+    "Victor": {
+      "lista": [
+        { "id": 12, "ciclo_formativo_id": 91, "nombre": "Desarrollo web en entorno cliente", "codigo": "0612" },
+        { "id": 13, "ciclo_formativo_id": 91, "nombre": "Sistemas Informáticos", "codigo": "0483" }
+      ]
+    },
+    "Alberto": {
+      "lista": [
+        { "id": 14, "ciclo_formativo_id": 91, "nombre": "Desarrollo web en entorno servidor", "codigo": "0613" }
+      ]
+    }
+  },
+  "matriculados": {
+    "Victor": {
+      "lista": [
+        { "id": 12, "ciclo_formativo_id": 91, "nombre": "Desarrollo web en entorno cliente", "codigo": "0612" },
+        { "id": 13, "ciclo_formativo_id": 91, "nombre": "Desarrollo web en entorno servidor", "codigo": "0613" },
+        { "id": 14, "ciclo_formativo_id": 91, "nombre": "Entornos de Desarrollo", "codigo": "0487" }
+      ]
+    },
+    "Antonio": {
+      "lista": [
+        { "id": 12, "ciclo_formativo_id": 91, "nombre": "Desarrollo web en entorno cliente", "codigo": "0612" }
+      ]
+    }
+  },
+  "tareas": [
+    { "id": 12, "observaciones": "DWEC UT18. Ejercicios 1 de 2" },
+    { "id": 13, "observaciones": "DWEC UT18. Ejercicios 2 de 2" },
+    { "id": 14, "observaciones": "DWEC UT18. Ejercicios de refuerzo" },
+    { "id": 15, "observaciones": "DWEC UT18. Ejercicios portfolio" }
+  ],
+  "familiasProfesionales": [
+    { "id": 1, "nombre": "Informática y Comunicaciones", "codigo": "IFC" },
+    { "id": 2, "nombre": "Administración y Gestión", "codigo": "ADG" },
+    { "id": 3, "nombre": "Comercio y Marketing", "codigo": "COM" },
+    { "id": 4, "nombre": "Hostelería y Turismo", "codigo": "HOT" },
+    { "id": 5, "nombre": "Sanidad", "codigo": "SAN" }
+  ],
+  "evidencias": []
+}
