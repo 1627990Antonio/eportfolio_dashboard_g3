@@ -1,12 +1,24 @@
-import { useState, useContext } from "react"
-import UserContext from "../contextos/UserContext"
-import impartidos from "../mocks/mock-impartidos"
+import { useState, useEffect, useContext } from "react";
+import UserContext from "../contextos/UserContext";
+import { obtenerModulosImpartidos } from "../servicios/modulosService";
 
-function useMisModulosImpartidos(){
-    const usuario = useContext(UserContext)
-    const [buscando, setBuscando] = useState(false)
-    const [lista, setLista] = useState(impartidos[usuario]?.lista || [])
+function useMisModulosImpartidos() {
+    const usuario = useContext(UserContext);
+    const [buscando, setBuscando] = useState(true);
+    const [lista, setLista] = useState([]);
 
-    return {buscando, lista}
+    useEffect(() => {
+        const cargarModulos = async () => {
+            setBuscando(true);
+            const modulos = await obtenerModulosImpartidos(usuario);
+            setLista(modulos);
+            setBuscando(false);
+        };
+        
+        cargarModulos();
+    }, [usuario]);
+
+    return { buscando, lista };
 }
-export default useMisModulosImpartidos
+
+export default useMisModulosImpartidos;

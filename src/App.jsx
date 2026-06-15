@@ -1,13 +1,11 @@
 import { useState } from 'react'
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { BrowserRouter } from 'react-router-dom'
 import './App.css'
 
 //Componentes
 import Cabecera from './componentes/Cabecera/Cabecera'
 import Roles from './componentes/Roles/Roles'
-import Dashboard from './componentes/Dashboard/Dashboard'
-import FuncionalidadDocente from './componentes/Dashboard/FuncionalidadDocente'
-import FuncionalidadEstudiante from './componentes/Dashboard/FuncionalidadEstudiante'
+import Principal from './componentes/Principal/Principal'
 
 //Contextos
 import TokenContext from './contextos/TokenContext'
@@ -16,7 +14,7 @@ import UserContext from './contextos/UserContext'
 function App() {
 
   //variables
-  let usuario = "Alberto"
+  let usuario = "Victor"
   let token = "abc123xyz456"
   let menu = "Inicio, Dashboard, Configuración"
 
@@ -38,11 +36,7 @@ function App() {
             </div>
             <div className="col-10 fondoDashboard">
               <TokenContext.Provider value={token}>
-                <Routes>
-                  <Route path="/" element={<Dashboard />} />
-                  <Route path="/funcionalidaddocente/:modulo" element={<FuncionalidadDocente />} />
-                  <Route path="/funcionalidadestudiante/:modulo" element={<FuncionalidadEstudiante />} />
-                </Routes>
+                <Principal />
               </TokenContext.Provider>
             </div>
           </div>

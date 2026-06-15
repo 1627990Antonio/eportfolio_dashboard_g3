@@ -4,30 +4,29 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
-import tareasRA from '../../mocks/mock-tareasRA';
-
+import useTareasRA from '../../hooks/useTareasRA';
 
 function SelectorTareaRA(props) {
   const [tarea, setTarea] = useState("");
+  const { lista: tareasRA, buscando } = useTareasRA('RA1');
 
   const handleChange = (event) => {
     const tareaSeleccionada = event.target.value;
 
     setTarea(tareaSeleccionada);
 
-    //Verificamos que la función existe para evitar errores y enviamos la tarea al padre
     if(props.seleccionarTarea){
       props.seleccionarTarea(tareaSeleccionada)
     }
   };
 
   function mostrarTareas(tarea){
-    return <MenuItem key={tarea.id} value={tarea}>{tarea.observaciones}</MenuItem>
+    return <MenuItem key={tarea.id} value={tarea}>{tarea.observaciones || tarea.nombre || `Tarea ${tarea.id}`}</MenuItem>
   }
 
   return (
     <Box sx={{ minWidth: 120 }}>
-      <FormControl fullWidth>
+      <FormControl fullWidth disabled={buscando}>
         <InputLabel id="demo-simple-select-label">Tarea</InputLabel>
         <Select
           labelId="demo-simple-select-label"
@@ -35,7 +34,9 @@ function SelectorTareaRA(props) {
           value={tarea}
           label="tarea"
           onChange={handleChange}>
-            {tareasRA.lista.map(mostrarTareas)}
+            {tareasRA && tareasRA.length > 0 
+                ? tareasRA.map(mostrarTareas) 
+                : <MenuItem value=""><em>Sin tareas</em></MenuItem>}
         </Select>
       </FormControl>
     </Box>

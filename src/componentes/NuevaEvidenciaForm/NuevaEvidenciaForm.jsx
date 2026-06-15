@@ -1,10 +1,13 @@
 import { useContext } from "react"
-import userContext from "../../contextos/UserContext"
+import UserContext from "../../contextos/UserContext"
 import { useForm } from "react-hook-form"
-import { TextField } from "@mui/material"
-import { Button } from "@mui/material"
+import { TextField, Button, Alert } from "@mui/material"
+import useInsertarEvidencia from "../../hooks/useInsertarEvidencia"
+
 function NuevaEvidenciaForm(props) {
-    const user = useContext(userContext)
+    const user = useContext(UserContext)
+    const { guardarEvidencia, insertando, error, exito } = useInsertarEvidencia()
+    
     const TAREA = {
         tarea_id: "tarea_id",
         estudiante_id: "estudiante_id",
@@ -13,7 +16,7 @@ function NuevaEvidenciaForm(props) {
         estado_validacion: "estado_validacion"
     }
     const TAREA_INICIAL = {
-        tarea_id: props.tareaActual.id,
+        tarea_id: props.tareaActual ? props.tareaActual.id : "",
         estudiante_id: user,
         url: "",
         descripcion: "",
@@ -22,18 +25,25 @@ function NuevaEvidenciaForm(props) {
     const { register,
         handleSubmit,
         reset,
-        formState: { errors },
-        watch } = useForm({ defaultValues: TAREA_INICIAL });
+        formState: { errors } } = useForm({ defaultValues: TAREA_INICIAL });
 
-    const manejarFormulario = handleSubmit((nuevaEvidencia) => {
-        if(props.recibirEvidencia){
-            props.recibirEvidencia(nuevaEvidencia)
+    const manejarFormulario = handleSubmit(async (nuevaEvidencia) => {
+        try {
+            await guardarEvidencia(nuevaEvidencia)
+            if(props.recibirEvidencia){
+                props.recibirEvidencia(nuevaEvidencia)
+            }
+            reset(TAREA_INICIAL);
+        } catch (e) {
+            console.error(e)
         }
-        reset(TAREA_INICIAL);
     })
     return (
         <>
             <form id="NuevaEvidenciaForm" onSubmit={manejarFormulario}>
+                {exito && <Alert severity="success" sx={{ mb: 2 }}>Evidencia insertada correctamente</Alert>}
+                {error && <Alert severity="error" sx={{ mb: 2 }}>Error: {error}</Alert>}
+                
                 {/* Campo de texto de URL*/}
                 <TextField
                     id={TAREA.url}
@@ -70,7 +80,9 @@ function NuevaEvidenciaForm(props) {
                         })}
                     error={!!errors.descripcion}
                     helperText={errors.descripcion?.message} /><br />
-                <Button variant="contained" type="submit">Añadir nueva evidencia</Button>
+                <Button variant="contained" type="submit" disabled={insertando || !props.tareaActual}>
+                    {insertando ? "Insertando..." : "Añadir nueva evidencia"}
+                </Button>
             </form>
         </>
     )
